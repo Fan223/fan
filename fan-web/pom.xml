@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>fan</groupId>
+        <artifactId>fan</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>fan-web</artifactId>
+    <packaging>jar</packaging>
+
+    <name>fan-web</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>fan</groupId>
+            <artifactId>fan-security</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>fan</groupId>
+            <artifactId>fan-blog</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>fan</groupId>
+            <artifactId>fan-nav</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>fan</groupId>
+            <artifactId>fan-dict</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!-- MySQL -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+
+        <!-- P6spy Starter -->
+        <dependency>
+            <groupId>com.github.gavlyukovskiy</groupId>
+            <artifactId>p6spy-spring-boot-starter</artifactId>
+            <version>${p6spy.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

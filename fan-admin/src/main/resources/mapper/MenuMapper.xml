@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fan.dao.MenuDAO">
+
+    <select id="listChildMenus" resultType="fan.pojo.entity.MenuDO">
+        WITH RECURSIVE temp AS (
+            SELECT id, parent_id, position, name, path, authority, component, type, icon, order_num, flag, create_time, update_time
+            FROM menu WHERE id = #{parentId}
+            UNION ALL
+            SELECT m.id, m.parent_id, m.position, m.name, m.path, m.authority, m.component, m.type, m.icon, m.order_num, m.flag, m.create_time, m.update_time
+            FROM menu m JOIN temp t ON m.parent_id = t.id
+        )
+        SELECT id, parent_id, position, name, path, authority, component, type, icon, order_num, flag, create_time, update_time
+        FROM temp where id != #{parentId} and flag = 'Y' and type in (1, 2, 4)
+        order by order_num;
+    </select>
+
+    <select id="getTopMenuId" resultType="java.lang.String">
+        WITH RECURSIVE temp AS (
+            SELECT id, parent_id, flag, type
+            FROM menu WHERE id = #{menuId}
+            UNION ALL
+            SELECT m.id, m.parent_id, m.flag, m.type
+            FROM menu m JOIN temp t ON m.id = t.parent_id
+        )
+        SELECT id, flag, type FROM temp
+        where parent_id = '' and flag = 'Y' and type in (1, 2, 4);
+    </select>
+</mapper>
