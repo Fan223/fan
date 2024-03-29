@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  * @since 2024/3/25 10:09
  */
 @RestController
-@RequestMapping("/sys/user")
+@RequestMapping("/admin/user")
 public class UserController {
 
     private final UserInfoService userInfoService;

@@ -25,7 +25,7 @@ import java.util.Set;
  * @since 2024/2/23 9:25
  */
 @RestController
-@RequestMapping("/sys/menu")
+@RequestMapping("/admin/menu")
 public class MenuController {
 
     private final MenuService menuService;
