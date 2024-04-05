@@ -35,7 +35,8 @@ public class NavServiceImpl implements NavService {
     public Page<NavDO> pageNavs(NavQuery navQuery) {
         LambdaQueryWrapper<NavDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(StringUtil.isNotBlank(navQuery.getName()), NavDO::getName, navQuery.getName())
-                .eq(StringUtil.isNotBlank(navQuery.getType()), NavDO::getType, navQuery.getType());
+                .eq(StringUtil.isNotBlank(navQuery.getType()), NavDO::getType, navQuery.getType())
+                .orderByAsc(NavDO::getName);
 
         return navDAO.selectPage(new Page<>(navQuery.getCurrentPage(), navQuery.getPageSize()), queryWrapper);
     }
