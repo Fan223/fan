@@ -17,4 +17,6 @@ public class ArticleQuery extends PageQuery {
     private String categoryId;
 
     private String title;
+
+    private String flag;
 }

@@ -91,7 +91,7 @@ public interface ArticleService {
      * @author Fan
      * @since 2024/3/14 11:17
      */
-    String saveArticle(ArticleDO articleDO);
+    ArticleDO saveArticle(ArticleDO articleDO);
 
     /**
      * Update article
@@ -101,7 +101,7 @@ public interface ArticleService {
      * @author Fan
      * @since 2024/3/14 11:17
      */
-    String updateArticle(ArticleDO articleDO);
+    ArticleDO updateArticle(ArticleDO articleDO);
 
     /**
      * Batch delete articles via ID list

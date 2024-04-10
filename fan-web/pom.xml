@@ -43,11 +43,10 @@
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
-        <!-- P6spy Starter -->
+        <!-- P6spy -->
         <dependency>
             <groupId>com.github.gavlyukovskiy</groupId>
             <artifactId>p6spy-spring-boot-starter</artifactId>
-            <version>${p6spy.version}</version>
         </dependency>
     </dependencies>
 

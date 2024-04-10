@@ -185,6 +185,7 @@ public class ArticleServiceImpl implements ArticleService {
     public Page<ArticleDO> pageArticles(ArticleQuery articleQuery) {
         QueryWrapper<ArticleDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtil.isNotBlank(articleQuery.getCategoryId()), CATEGORY_ID, articleQuery.getCategoryId())
+                .eq(StringUtil.isNotBlank(articleQuery.getFlag()), "flag", articleQuery.getFlag())
                 .like(StringUtil.isNotBlank(articleQuery.getTitle()), "title", articleQuery.getTitle())
                 .select("id", CATEGORY_ID, "title", "left(content, 200) as content", "cover", "flag", "create_time", "update_time")
                 .orderByDesc("update_time");
@@ -219,32 +220,29 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public String saveArticle(ArticleDO articleDO) {
+    public ArticleDO saveArticle(ArticleDO articleDO) {
         if (StringUtil.isBlank(articleDO.getId())) {
             String snowflakeId = IdUtil.getSnowflakeIdStr();
             articleDO.setId(snowflakeId);
-            articleDO.setFlag("Y");
-
-            if (StringUtil.isBlank(articleDO.getCategoryId())) {
-                articleDO.setCategoryId("14151607879553024");
-            }
+            articleDO.setCategoryId("14151607879553024");
+            articleDO.setCover("https://img.fan223.cn/wallpaper/12.jpg");
 
             Timestamp now = Timestamp.valueOf(LocalDateTime.now());
             articleDO.setCreateTime(now);
             articleDO.setUpdateTime(now);
 
             articleDAO.insert(articleDO);
-            return snowflakeId;
+            return articleDO;
         }
 
         return updateArticle(articleDO);
     }
 
     @Override
-    public String updateArticle(ArticleDO articleDO) {
+    public ArticleDO updateArticle(ArticleDO articleDO) {
         articleDO.setUpdateTime(Timestamp.valueOf(LocalDateTime.now()));
         articleDAO.updateById(articleDO);
-        return articleDO.getId();
+        return articleDO;
     }
 
     @Override

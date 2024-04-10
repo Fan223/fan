@@ -109,15 +109,18 @@ public class ArticleController {
     }
 
     @PostMapping("/saveArticle")
-    public Response<String> saveArticle(@RequestBody ArticleDTO articleDTO) {
+    public Response<ArticleVO> saveArticle(@RequestBody ArticleDTO articleDTO) {
         ArticleDO articleDO = blogMapStruct.transArticles(articleDTO);
-        return Response.success(articleService.saveArticle(articleDO));
+        ArticleDO article = articleService.saveArticle(articleDO);
+        return Response.success(blogMapStruct.transArticles(article));
     }
 
     @PutMapping("/updateArticle")
-    public Response<String> updateArticle(@RequestBody ArticleDTO articleDTO) {
+    public Response<ArticleVO> updateArticle(@RequestBody ArticleDTO articleDTO) {
         ArticleDO articleDO = blogMapStruct.transArticles(articleDTO);
-        return Response.success(articleService.updateArticle(articleDO));
+        ArticleDO article = articleService.updateArticle(articleDO);
+        return Response.success(blogMapStruct.transArticles(article));
+
     }
 
     @DeleteMapping("/batchDeleteArticles/{id}")
