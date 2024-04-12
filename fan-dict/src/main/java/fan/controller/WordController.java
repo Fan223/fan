@@ -38,6 +38,12 @@ public class WordController {
         return Response.success(dictMapStruct.transWord(wordPage));
     }
 
+    @GetMapping("/listWords")
+    public Response<List<WordVO>> listWords(WordQuery wordQuery) {
+        List<WordDO> wordVOS = wordService.listWords(wordQuery);
+        return Response.success(dictMapStruct.transWord(wordVOS));
+    }
+
     @PostMapping("/addWord")
     public Response<Integer> addWord(@RequestBody WordDTO wordDTO) {
         WordDO wordDO = dictMapStruct.transWord(wordDTO);

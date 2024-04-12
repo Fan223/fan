@@ -25,6 +25,16 @@ public interface WordService {
     Page<WordDO> pageWords(WordQuery wordQuery);
 
     /**
+     * Retrieve words via ID list
+     *
+     * @param wordQuery {@link WordQuery}
+     * @return {@link List<WordDO>}
+     * @author Fan
+     * @since 2024/4/11 16:12
+     */
+    List<WordDO> listWords(WordQuery wordQuery);
+
+    /**
      * Add word
      *
      * @param wordDO {@link WordDO}

@@ -35,10 +35,18 @@ public class WordServiceImpl implements WordService {
     public Page<WordDO> pageWords(WordQuery wordQuery) {
         LambdaQueryWrapper<WordDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(StringUtil.isNotBlank(wordQuery.getEn()), WordDO::getEn, wordQuery.getEn())
-                .eq(StringUtil.isNotBlank(wordQuery.getCn()), WordDO::getCn, wordQuery.getCn())
-                .eq(StringUtil.isNotBlank(wordQuery.getType()), WordDO::getType, wordQuery.getType());
-
+                .like(StringUtil.isNotBlank(wordQuery.getCn()), WordDO::getCn, wordQuery.getCn())
+                .eq(StringUtil.isNotBlank(wordQuery.getType()), WordDO::getType, wordQuery.getType())
+                .orderByAsc(WordDO::getEn);
         return wordDAO.selectPage(new Page<>(wordQuery.getCurrentPage(), wordQuery.getPageSize()), queryWrapper);
+    }
+
+    @Override
+    public List<WordDO> listWords(WordQuery wordQuery) {
+        LambdaQueryWrapper<WordDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.likeRight(StringUtil.isNotBlank(wordQuery.getEn()), WordDO::getEn, wordQuery.getEn())
+                .last("limit 5");
+        return wordDAO.selectList(queryWrapper);
     }
 
     @Override
