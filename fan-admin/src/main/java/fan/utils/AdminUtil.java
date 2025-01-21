@@ -1,7 +1,7 @@
 package fan.utils;
 
-import fan.core.collection.CollectionUtil;
-import fan.core.collection.ListUtil;
+import grey.fable.base.collection.CollectionUtils;
+import grey.fable.base.collection.ListUtils;
 import fan.pojo.vo.MenuVO;
 
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ public class AdminUtil {
     }
 
     public static List<MenuVO> buildTree(List<MenuVO> menuVos) {
-        if (CollectionUtil.isEmpty(menuVos)) {
-            return ListUtil.list();
+        if (CollectionUtils.isEmpty(menuVos)) {
+            return new ArrayList<>();
         }
         List<MenuVO> menusTree = new ArrayList<>(menuVos.size());
 

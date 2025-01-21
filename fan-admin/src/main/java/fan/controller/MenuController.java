@@ -1,8 +1,9 @@
 package fan.controller;
 
-import fan.core.Response;
-import fan.core.collection.CollectionUtil;
-import fan.core.collection.ListUtil;
+import cn.hutool.core.collection.ListUtil;
+import grey.fable.base.net.Response;
+import grey.fable.base.collection.CollectionUtils;
+import grey.fable.base.collection.ListUtils;
 import fan.pojo.dto.MenuDTO;
 import fan.pojo.entity.MenuDO;
 import fan.pojo.query.MenuQuery;
@@ -54,7 +55,7 @@ public class MenuController {
         String userId = principal.getName();
 
         if ("00000001".equals(userId)) {
-            return listMenus(MenuQuery.builder().flag("Y").type(ListUtil.list("1", "2", "4")).build());
+            return listMenus(MenuQuery.builder().flag("Y").type(ListUtils.of("1", "2", "4")).build());
         } else {
             List<MenuDO> menuDos = menuService.listRouteMenus(userId);
             return Response.success(AdminUtil.buildTree(adminMapStruct.transMenu(menuDos)));
@@ -94,7 +95,7 @@ public class MenuController {
     public Response<Integer> batchDeleteMenus(@PathVariable("id") Set<String> ids) {
         for (String id : ids) {
             List<MenuDO> menuDos = menuService.listChildMenus(id);
-            if (CollectionUtil.isNotEmpty(menuDos)
+            if (CollectionUtils.isNotEmpty(menuDos)
                     && !new HashSet<>(ids).containsAll(menuDos.stream().map(MenuDO::getId).toList())) {
                 return Response.fail("请先删除子菜单", null);
             }

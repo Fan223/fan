@@ -1,7 +1,7 @@
 package fan.controller;
 
-import fan.core.Response;
-import fan.core.text.StringUtil;
+import grey.fable.base.net.Response;
+import grey.fable.base.text.StringUtils;
 import fan.pojo.dto.LoginDTO;
 import fan.pojo.entity.UserAuthInfoDO;
 import fan.service.UserAuthInfoService;
@@ -34,9 +34,9 @@ public class LoginController {
     public Response<String> login(@RequestBody LoginDTO loginDTO) {
         String username = loginDTO.getUsername();
         String password = loginDTO.getPassword();
-        if (StringUtil.isBlank(username)) {
+        if (StringUtils.isBlank(username)) {
             return Response.fail("用户名不能为空", null);
-        } else if (StringUtil.isBlank(password)) {
+        } else if (StringUtils.isBlank(password)) {
             return Response.fail("密码不能为空", null);
         }
 

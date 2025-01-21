@@ -3,12 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>fan</groupId>
-        <artifactId>fan-dependencies</artifactId>
-        <version>1.1</version>
+        <groupId>grey.fable</groupId>
+        <artifactId>grey-fable-dependencies</artifactId>
+        <version>1.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <groupId>fan</groupId>
     <artifactId>fan</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>

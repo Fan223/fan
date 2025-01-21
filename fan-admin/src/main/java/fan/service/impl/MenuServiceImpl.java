@@ -1,9 +1,9 @@
 package fan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import fan.core.collection.CollectionUtil;
-import fan.core.text.StringUtil;
-import fan.core.util.IdUtil;
+import grey.fable.base.collection.CollectionUtils;
+import grey.fable.base.text.StringUtils;
+import grey.fable.base.util.IdUtils;
 import fan.dao.MenuDAO;
 import fan.pojo.entity.MenuDO;
 import fan.pojo.query.MenuQuery;
@@ -65,11 +65,11 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<MenuDO> listMenus(MenuQuery menuQuery) {
         LambdaQueryWrapper<MenuDO> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(StringUtil.isNotBlank(menuQuery.getPosition()), MenuDO::getPosition, menuQuery.getPosition())
-                .eq(StringUtil.isNotBlank(menuQuery.getFlag()), MenuDO::getFlag, menuQuery.getFlag())
-                .like(StringUtil.isNotBlank(menuQuery.getName()), MenuDO::getName, menuQuery.getName())
-                .in(CollectionUtil.isNotEmpty(menuQuery.getIds()), MenuDO::getId, menuQuery.getIds())
-                .in(CollectionUtil.isNotEmpty(menuQuery.getType()), MenuDO::getType, menuQuery.getType())
+        queryWrapper.eq(StringUtils.isNotBlank(menuQuery.getPosition()), MenuDO::getPosition, menuQuery.getPosition())
+                .eq(StringUtils.isNotBlank(menuQuery.getFlag()), MenuDO::getFlag, menuQuery.getFlag())
+                .like(StringUtils.isNotBlank(menuQuery.getName()), MenuDO::getName, menuQuery.getName())
+                .in(CollectionUtils.isNotEmpty(menuQuery.getIds()), MenuDO::getId, menuQuery.getIds())
+                .in(CollectionUtils.isNotEmpty(menuQuery.getType()), MenuDO::getType, menuQuery.getType())
                 .orderByAsc(MenuDO::getOrderNum);
         return menuDAO.selectList(queryWrapper);
     }
@@ -86,7 +86,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Integer addMenu(MenuDO menuDO) {
-        menuDO.setId(IdUtil.getSnowflakeIdStr());
+        menuDO.setId(IdUtils.getSnowflakeNextIdStr());
 
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         menuDO.setCreateTime(now);

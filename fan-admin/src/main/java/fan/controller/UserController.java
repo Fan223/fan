@@ -1,7 +1,7 @@
 package fan.controller;
 
-import fan.core.Response;
-import fan.core.util.IdUtil;
+import grey.fable.base.net.Response;
+import grey.fable.base.util.IdUtils;
 import fan.pojo.dto.UserDTO;
 import fan.pojo.entity.UserAuthInfoDO;
 import fan.pojo.entity.UserInfoDO;
@@ -51,7 +51,7 @@ public class UserController {
             return Response.fail("User already exists", 0);
         }
 
-        String userId = IdUtil.getSnowflakeIdStr();
+        String userId = IdUtils.getSnowflakeNextIdStr();
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
 
         UserInfoDO userInfoDO = adminMapStruct.transUserInfo(userDTO);

@@ -3,10 +3,10 @@ package fan.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import fan.core.collection.CollectionUtil;
-import fan.core.map.MapUtil;
-import fan.core.text.StringUtil;
-import fan.core.util.IdUtil;
+import grey.fable.base.collection.CollectionUtils;
+import grey.fable.base.map.MapUtils;
+import grey.fable.base.text.StringUtils;
+import grey.fable.base.util.IdUtils;
 import fan.dao.ArticleDAO;
 import fan.pojo.entity.ArticleDO;
 import fan.pojo.entity.CategoryDO;
@@ -184,9 +184,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Page<ArticleDO> pageArticles(ArticleQuery articleQuery) {
         QueryWrapper<ArticleDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(StringUtil.isNotBlank(articleQuery.getCategoryId()), CATEGORY_ID, articleQuery.getCategoryId())
-                .eq(StringUtil.isNotBlank(articleQuery.getFlag()), "flag", articleQuery.getFlag())
-                .like(StringUtil.isNotBlank(articleQuery.getTitle()), "title", articleQuery.getTitle())
+        queryWrapper.eq(StringUtils.isNotBlank(articleQuery.getCategoryId()), CATEGORY_ID, articleQuery.getCategoryId())
+                .eq(StringUtils.isNotBlank(articleQuery.getFlag()), "flag", articleQuery.getFlag())
+                .like(StringUtils.isNotBlank(articleQuery.getTitle()), "title", articleQuery.getTitle())
                 .select("id", CATEGORY_ID, "title", "left(content, 200) as content", "cover", "flag", "create_time", "update_time")
                 .orderByDesc("update_time");
         return articleDAO.selectPage(new Page<>(articleQuery.getCurrentPage(), articleQuery.getPageSize()), queryWrapper);
@@ -194,7 +194,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleDO> listArticles(List<String> ids) {
-        return articleDAO.selectList(new LambdaQueryWrapper<ArticleDO>().in(CollectionUtil.isNotEmpty(ids), ArticleDO::getId, ids));
+        return articleDAO.selectList(new LambdaQueryWrapper<ArticleDO>().in(CollectionUtils.isNotEmpty(ids), ArticleDO::getId, ids));
     }
 
     @Override
@@ -210,7 +210,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .groupBy(CATEGORY_ID);
         List<Map<String, Object>> maps = articleDAO.selectMaps(queryWrapper);
 
-        Map<String, String> categoryCounts = MapUtil.hashMap(maps.size());
+        Map<String, String> categoryCounts = MapUtils.hashMap(false);
         for (Map<String, Object> map : maps) {
             String categoryId = map.get(CATEGORY_ID).toString();
             String count = ((Long) map.get("count")).toString();
@@ -221,8 +221,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDO saveArticle(ArticleDO articleDO) {
-        if (StringUtil.isBlank(articleDO.getId())) {
-            String snowflakeId = IdUtil.getSnowflakeIdStr();
+        if (StringUtils.isBlank(articleDO.getId())) {
+            String snowflakeId = IdUtils.getSnowflakeNextIdStr();
             articleDO.setId(snowflakeId);
             articleDO.setCategoryId("14151607879553024");
             articleDO.setCover("https://img.fan223.cn/wallpaper/12.jpg");

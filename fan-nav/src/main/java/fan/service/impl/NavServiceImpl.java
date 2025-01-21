@@ -2,8 +2,8 @@ package fan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import fan.core.text.StringUtil;
-import fan.core.util.IdUtil;
+import grey.fable.base.text.StringUtils;
+import grey.fable.base.util.IdUtils;
 import fan.dao.NavDAO;
 import fan.pojo.entity.NavDO;
 import fan.pojo.query.NavQuery;
@@ -34,8 +34,8 @@ public class NavServiceImpl implements NavService {
     @Override
     public Page<NavDO> pageNavs(NavQuery navQuery) {
         LambdaQueryWrapper<NavDO> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(StringUtil.isNotBlank(navQuery.getName()), NavDO::getName, navQuery.getName())
-                .eq(StringUtil.isNotBlank(navQuery.getType()), NavDO::getType, navQuery.getType())
+        queryWrapper.eq(StringUtils.isNotBlank(navQuery.getName()), NavDO::getName, navQuery.getName())
+                .eq(StringUtils.isNotBlank(navQuery.getType()), NavDO::getType, navQuery.getType())
                 .orderByAsc(NavDO::getName);
 
         return navDAO.selectPage(new Page<>(navQuery.getCurrentPage(), navQuery.getPageSize()), queryWrapper);
@@ -43,7 +43,7 @@ public class NavServiceImpl implements NavService {
 
     @Override
     public Integer addNav(NavDO navDO) {
-        navDO.setId(IdUtil.getSnowflakeIdStr());
+        navDO.setId(IdUtils.getSnowflakeNextIdStr());
 
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         navDO.setCreateTime(now);

@@ -2,9 +2,8 @@ package fan.filter;
 
 import cn.hutool.jwt.JWT;
 import fan.consts.AuthConst;
-import fan.core.text.StringUtil;
+import grey.fable.base.text.StringUtils;
 import fan.pojo.entity.MenuDO;
-import fan.redis.RedisUtil;
 import fan.service.MenuService;
 import fan.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -23,7 +22,9 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +38,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final MenuService menuService;
 
+    private Map<String, String> map = new HashMap<>();
+
     @Autowired
     public JwtAuthenticationFilter(MenuService menuService) {
         this.menuService = menuService;
@@ -47,6 +50,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        System.out.println(request.getRequestURI());
 
         // Allowed whitelist
         String uri = request.getRequestURI();
@@ -58,7 +62,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         }
 
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (StringUtil.isBlank(token)) {
+        if (StringUtils.isBlank(token)) {
             token = request.getParameter("token");
         }
 
@@ -70,11 +74,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         }
 
         String userId = jwt.getPayload("sub").toString();
-        Object authorities = RedisUtil.hashGet(userId, "authorities");
+        String authorities = map.get(userId);
         if (null == authorities) {
             List<MenuDO> menuDos = menuService.listRouteMenus(userId);
             authorities = menuDos.stream().map(MenuDO::getAuthority).collect(Collectors.joining(","));
-            RedisUtil.hashSet(userId, "authorities", authorities);
+            map.put(userId, authorities);
         }
 
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities.toString());

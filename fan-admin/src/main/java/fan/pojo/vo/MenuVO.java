@@ -1,8 +1,9 @@
 package fan.pojo.vo;
 
-import fan.core.collection.ListUtil;
+import grey.fable.base.collection.ListUtils;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class MenuVO {
 
     public List<MenuVO> getChildren() {
         if (null == children) {
-            children = ListUtil.list();
+            children = new ArrayList<>();
         }
         return children;
     }

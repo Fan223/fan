@@ -1,7 +1,7 @@
 package fan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import fan.core.text.StringUtil;
+import grey.fable.base.text.StringUtils;
 import fan.dao.CategoryDAO;
 import fan.pojo.entity.CategoryDO;
 import fan.pojo.query.CategoryQuery;
@@ -30,8 +30,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDO> listCategories(CategoryQuery categoryQuery) {
         LambdaQueryWrapper<CategoryDO> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(StringUtil.isNotBlank(categoryQuery.getFlag()), CategoryDO::getFlag, categoryQuery.getFlag())
-                .like(StringUtil.isNotBlank(categoryQuery.getName()), CategoryDO::getName, categoryQuery.getName())
+        queryWrapper.eq(StringUtils.isNotBlank(categoryQuery.getFlag()), CategoryDO::getFlag, categoryQuery.getFlag())
+                .like(StringUtils.isNotBlank(categoryQuery.getName()), CategoryDO::getName, categoryQuery.getName())
                 .orderByAsc(CategoryDO::getOrderNum);
         return categoryDAO.selectList(queryWrapper);
     }

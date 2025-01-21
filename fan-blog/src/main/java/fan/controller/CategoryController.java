@@ -1,6 +1,6 @@
 package fan.controller;
 
-import fan.core.Response;
+import grey.fable.base.net.Response;
 import fan.pojo.entity.CategoryDO;
 import fan.pojo.query.CategoryQuery;
 import fan.pojo.vo.CategoryVO;

@@ -2,8 +2,8 @@ package fan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import fan.core.text.StringUtil;
-import fan.core.util.IdUtil;
+import grey.fable.base.text.StringUtils;
+import grey.fable.base.util.IdUtils;
 import fan.dao.WordDAO;
 import fan.pojo.entity.WordDO;
 import fan.pojo.query.WordQuery;
@@ -34,9 +34,9 @@ public class WordServiceImpl implements WordService {
     @Override
     public Page<WordDO> pageWords(WordQuery wordQuery) {
         LambdaQueryWrapper<WordDO> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(StringUtil.isNotBlank(wordQuery.getEn()), WordDO::getEn, wordQuery.getEn())
-                .like(StringUtil.isNotBlank(wordQuery.getCn()), WordDO::getCn, wordQuery.getCn())
-                .eq(StringUtil.isNotBlank(wordQuery.getType()), WordDO::getType, wordQuery.getType())
+        queryWrapper.eq(StringUtils.isNotBlank(wordQuery.getEn()), WordDO::getEn, wordQuery.getEn())
+                .like(StringUtils.isNotBlank(wordQuery.getCn()), WordDO::getCn, wordQuery.getCn())
+                .eq(StringUtils.isNotBlank(wordQuery.getType()), WordDO::getType, wordQuery.getType())
                 .orderByAsc(WordDO::getEn);
         return wordDAO.selectPage(new Page<>(wordQuery.getCurrentPage(), wordQuery.getPageSize()), queryWrapper);
     }
@@ -44,14 +44,14 @@ public class WordServiceImpl implements WordService {
     @Override
     public List<WordDO> listWords(WordQuery wordQuery) {
         LambdaQueryWrapper<WordDO> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.likeRight(StringUtil.isNotBlank(wordQuery.getEn()), WordDO::getEn, wordQuery.getEn())
+        queryWrapper.likeRight(StringUtils.isNotBlank(wordQuery.getEn()), WordDO::getEn, wordQuery.getEn())
                 .last("limit 5");
         return wordDAO.selectList(queryWrapper);
     }
 
     @Override
     public Integer addWord(WordDO wordDO) {
-        wordDO.setId(IdUtil.getSnowflakeIdStr());
+        wordDO.setId(IdUtils.getSnowflakeNextIdStr());
 
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         wordDO.setCreateTime(now);

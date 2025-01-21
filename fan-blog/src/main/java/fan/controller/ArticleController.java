@@ -1,7 +1,7 @@
 package fan.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import fan.core.Response;
+import grey.fable.base.net.Response;
 import fan.pojo.dto.ArticleDTO;
 import fan.pojo.entity.ArticleDO;
 import fan.pojo.query.ArticleQuery;
