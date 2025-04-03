@@ -51,7 +51,7 @@ public class UserController {
             return Response.fail("User already exists", 0);
         }
 
-        String userId = IdUtils.getSnowflakeNextIdStr();
+        String userId = String.valueOf(IdUtils.getSnowflakeId());
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
 
         UserInfoDO userInfoDO = adminMapStruct.transUserInfo(userDTO);

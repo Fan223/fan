@@ -21,5 +21,9 @@ public class ArticleDTO {
 
     private String cover;
 
+    private String view;
+
+    private String state;
+
     private String flag;
 }

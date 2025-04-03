@@ -86,7 +86,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Integer addMenu(MenuDO menuDO) {
-        menuDO.setId(IdUtils.getSnowflakeNextIdStr());
+        menuDO.setId(String.valueOf(IdUtils.getSnowflakeId()));
 
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         menuDO.setCreateTime(now);
@@ -102,6 +102,6 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Integer batchDeleteMenus(Set<String> ids) {
-        return menuDAO.deleteBatchIds(ids);
+        return menuDAO.deleteByIds(ids);
     }
 }

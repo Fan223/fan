@@ -74,6 +74,8 @@ public interface ArticleService {
      */
     ArticleDO getArticleById(String id);
 
+    void incrementView(String id);
+
     /**
      * Retrieve a list of article counts for each category
      *
@@ -112,4 +114,6 @@ public interface ArticleService {
      * @since 2024/3/14 11:17
      */
     Integer batchDeleteArticles(List<String> ids);
+
+    List<ArticleDO> listRecommendArticles();
 }

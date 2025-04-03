@@ -2,7 +2,9 @@ package fan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import fan.redis.RedisClient;
 import grey.fable.base.collection.CollectionUtils;
 import grey.fable.base.map.MapUtils;
 import grey.fable.base.text.StringUtils;
@@ -17,6 +19,7 @@ import fan.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedOutputStream;
@@ -32,6 +35,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
@@ -52,15 +56,18 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleDAO articleDAO;
     private final CategoryService categoryService;
+    private final RedisClient redisClient;
 
     @Autowired
-    public ArticleServiceImpl(ArticleDAO articleDAO, CategoryService categoryService) {
+    public ArticleServiceImpl(ArticleDAO articleDAO, CategoryService categoryService, RedisClient redisClient) {
         this.articleDAO = articleDAO;
         this.categoryService = categoryService;
+        this.redisClient = redisClient;
     }
 
     private static final String CATEGORY_ID = "category_id";
     private static final String WEBSITE = "img.fan223.cn/";
+    private static final String ARTICLE_VIEWS_KEY = "fan:article:view";
 
     @Override
     public Integer cleanInvalidImages() {
@@ -187,8 +194,8 @@ public class ArticleServiceImpl implements ArticleService {
         queryWrapper.eq(StringUtils.isNotBlank(articleQuery.getCategoryId()), CATEGORY_ID, articleQuery.getCategoryId())
                 .eq(StringUtils.isNotBlank(articleQuery.getFlag()), "flag", articleQuery.getFlag())
                 .like(StringUtils.isNotBlank(articleQuery.getTitle()), "title", articleQuery.getTitle())
-                .select("id", CATEGORY_ID, "title", "left(content, 200) as content", "cover", "flag", "create_time", "update_time")
-                .orderByDesc("update_time");
+                .select("id", CATEGORY_ID, "title", "left(content, 140) as content", "cover", "flag", "view", "state", "create_time", "update_time")
+                .orderByDesc("date(update_time)", "view");
         return articleDAO.selectPage(new Page<>(articleQuery.getCurrentPage(), articleQuery.getPageSize()), queryWrapper);
     }
 
@@ -198,8 +205,48 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleDO> listRecommendArticles() {
+        QueryWrapper<ArticleDO> wrapper = new QueryWrapper<>(ArticleDO.class);
+        wrapper.eq("state", 2)
+                .select("id", CATEGORY_ID, "title", "left(content, 140) as content", "cover", "flag", "view", "state", "create_time", "update_time")
+                .orderByDesc("view")
+                .last("limit 3");
+        return articleDAO.selectList(wrapper);
+    }
+
+    @Override
     public ArticleDO getArticleById(String id) {
         return articleDAO.selectById(id);
+    }
+
+    @Override
+    public void incrementView(String id) {
+        CompletableFuture.runAsync(() -> redisClient.hIncrement(ARTICLE_VIEWS_KEY, id, 1));
+    }
+
+    /**
+     * 定时同步文章浏览量到数据库, 每天 4 点执行.
+     *
+     * @author GreyFable
+     * @since 2025/3/7 17:13
+     */
+    @Scheduled(cron = "0 0 4 * * ?")
+    public void syncView() {
+        Map<Object, Object> map = redisClient.hEntries(ARTICLE_VIEWS_KEY);
+        if (MapUtils.isNotEmpty(map)) {
+            for (Map.Entry<Object, Object> entry : map.entrySet()) {
+                long id = Long.parseLong(entry.getKey().toString());
+                int view = Integer.parseInt(entry.getValue().toString());
+                updateView(id, view);
+            }
+            redisClient.delete(ARTICLE_VIEWS_KEY);
+        }
+    }
+
+    private void updateView(long id, int view) {
+        LambdaUpdateWrapper<ArticleDO> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.setSql("view = view + {0}", view).eq(ArticleDO::getId, id);
+        articleDAO.update(null, wrapper);
     }
 
     @Override
@@ -222,7 +269,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleDO saveArticle(ArticleDO articleDO) {
         if (StringUtils.isBlank(articleDO.getId())) {
-            String snowflakeId = IdUtils.getSnowflakeNextIdStr();
+            String snowflakeId = String.valueOf(IdUtils.getSnowflakeId());
             articleDO.setId(snowflakeId);
             articleDO.setCategoryId("14151607879553024");
             articleDO.setCover("https://img.fan223.cn/wallpaper/12.jpg");
@@ -247,6 +294,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Integer batchDeleteArticles(List<String> ids) {
-        return articleDAO.deleteBatchIds(ids);
+        return articleDAO.deleteByIds(ids);
     }
 }

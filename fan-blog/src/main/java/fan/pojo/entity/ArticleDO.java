@@ -27,6 +27,10 @@ public class ArticleDO {
 
     private String cover;
 
+    private Integer view;
+
+    private Integer state;
+
     private String flag;
 
     private Timestamp createTime;

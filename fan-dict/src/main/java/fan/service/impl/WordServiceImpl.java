@@ -51,7 +51,7 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public Integer addWord(WordDO wordDO) {
-        wordDO.setId(IdUtils.getSnowflakeNextIdStr());
+        wordDO.setId(String.valueOf(IdUtils.getSnowflakeId()));
 
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         wordDO.setCreateTime(now);
@@ -67,6 +67,6 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public Integer batchDeleteWords(List<String> ids) {
-        return wordDAO.deleteBatchIds(ids);
+        return wordDAO.deleteByIds(ids);
     }
 }

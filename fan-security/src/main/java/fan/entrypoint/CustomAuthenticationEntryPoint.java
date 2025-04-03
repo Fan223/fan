@@ -29,7 +29,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setHeader("WWW-Authenticate", authException.getMessage());
 
         ServletOutputStream outputStream = response.getOutputStream();
-        Response<String> fail = Response.fail(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage(),
+        Response<String> fail = new Response<>(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage(),
                 "CustomAuthenticationEntryPoint");
         outputStream.write(JSONUtil.toJsonStr(fail).getBytes(StandardCharsets.UTF_8));
 

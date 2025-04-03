@@ -21,6 +21,10 @@ public class ArticleVO {
 
     private String cover;
 
+    private Integer view;
+
+    private Integer state;
+
     private String flag;
 
     private String createTime;

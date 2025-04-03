@@ -1,5 +1,5 @@
 fan:
-  image-path: "/usr/fan/images/"
+  image-path: "/fan/images/"
 
 server:
   port: 8888
@@ -12,6 +12,10 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/fan?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&connectTimeout=5000&socketTimeout=10000
     username: username
     password: password
+  data:
+    redis:
+      host: 127.0.0.1
+      password: password
 
 logging:
   level:

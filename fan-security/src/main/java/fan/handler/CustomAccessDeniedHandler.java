@@ -28,7 +28,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
         ServletOutputStream outputStream = response.getOutputStream();
-        Response<String> fail = Response.fail(HttpServletResponse.SC_FORBIDDEN, accessDeniedException.getMessage(),
+        Response<String> fail = new Response<>(HttpServletResponse.SC_FORBIDDEN, accessDeniedException.getMessage(),
                 "CustomAccessDeniedHandler");
         outputStream.write(JSONUtil.toJsonStr(fail).getBytes(StandardCharsets.UTF_8));
 

@@ -102,9 +102,16 @@ public class ArticleController {
         return Response.success(blogMapStruct.transArticles(articleDOS));
     }
 
+    @GetMapping("/listRecommendArticles")
+    public Response<List<ArticleVO>> listRecommendArticles() {
+        return Response.success(blogMapStruct.transArticles(articleService.listRecommendArticles()));
+    }
+
     @GetMapping("/getArticle/{id}")
     public Response<ArticleVO> getArticleById(@PathVariable("id") String id) {
         ArticleDO articleDO = articleService.getArticleById(id);
+        // 增加浏览量
+        articleService.incrementView(id);
         return Response.success(blogMapStruct.transArticles(articleDO));
     }
 

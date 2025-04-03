@@ -34,8 +34,8 @@ public class NavServiceImpl implements NavService {
     @Override
     public Page<NavDO> pageNavs(NavQuery navQuery) {
         LambdaQueryWrapper<NavDO> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(StringUtils.isNotBlank(navQuery.getName()), NavDO::getName, navQuery.getName())
-                .eq(StringUtils.isNotBlank(navQuery.getType()), NavDO::getType, navQuery.getType())
+        queryWrapper.eq(StringUtils.isNotBlank(navQuery.getType()), NavDO::getType, navQuery.getType())
+                .like(StringUtils.isNotBlank(navQuery.getName()), NavDO::getName, navQuery.getName())
                 .orderByAsc(NavDO::getName);
 
         return navDAO.selectPage(new Page<>(navQuery.getCurrentPage(), navQuery.getPageSize()), queryWrapper);
@@ -43,7 +43,7 @@ public class NavServiceImpl implements NavService {
 
     @Override
     public Integer addNav(NavDO navDO) {
-        navDO.setId(IdUtils.getSnowflakeNextIdStr());
+        navDO.setId(String.valueOf(IdUtils.getSnowflakeId()));
 
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         navDO.setCreateTime(now);
@@ -59,6 +59,6 @@ public class NavServiceImpl implements NavService {
 
     @Override
     public Integer batchDeleteNavs(List<String> ids) {
-        return navDAO.deleteBatchIds(ids);
+        return navDAO.deleteByIds(ids);
     }
 }
