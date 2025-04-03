@@ -68,7 +68,7 @@ public class ArticleController {
         ServletOutputStream outputStream = response.getOutputStream();
 
         if (1 == ids.size()) {
-            ArticleDO articleDO = articleService.getArticleById(ids.get(0));
+            ArticleDO articleDO = articleService.getArticleById(ids.getFirst());
 
             String encodeTitle = URLEncoder.encode(articleDO.getTitle().replaceAll("[\\\\/:*?\"<>|]", "") + ".md",
                     StandardCharsets.UTF_8).replace("+", "%20");
