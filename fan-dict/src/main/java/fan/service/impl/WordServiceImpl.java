@@ -2,12 +2,12 @@ package fan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import grey.fable.base.text.StringUtils;
-import grey.fable.base.util.IdUtils;
 import fan.dao.WordDAO;
 import fan.pojo.entity.WordDO;
 import fan.pojo.query.WordQuery;
 import fan.service.WordService;
+import fancy.toolkit.id.IdUtils;
+import fancy.toolkit.text.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

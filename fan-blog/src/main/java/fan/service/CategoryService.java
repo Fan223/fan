@@ -22,4 +22,6 @@ public interface CategoryService {
      * @since 2024/3/14 11:30
      */
     List<CategoryDO> listCategories(CategoryQuery categoryQuery);
+
+    void addCategory(CategoryDO categoryDO);
 }

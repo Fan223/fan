@@ -1,11 +1,11 @@
 package fan.controller;
 
-import grey.fable.base.net.Response;
-import grey.fable.base.text.StringUtils;
 import fan.pojo.dto.LoginDTO;
 import fan.pojo.entity.UserAuthInfoDO;
 import fan.service.UserAuthInfoService;
 import fan.utils.JwtUtil;
+import fancy.toolkit.net.Response;
+import fancy.toolkit.text.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -2,12 +2,12 @@ package fan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import grey.fable.base.text.StringUtils;
-import grey.fable.base.util.IdUtils;
 import fan.dao.NavDAO;
 import fan.pojo.entity.NavDO;
 import fan.pojo.query.NavQuery;
 import fan.service.NavService;
+import fancy.toolkit.id.IdUtils;
+import fancy.toolkit.text.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

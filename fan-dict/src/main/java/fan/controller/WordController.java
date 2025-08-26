@@ -1,13 +1,13 @@
 package fan.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import grey.fable.base.net.Response;
 import fan.pojo.dto.WordDTO;
 import fan.pojo.entity.WordDO;
 import fan.pojo.query.WordQuery;
 import fan.pojo.vo.WordVO;
 import fan.service.WordService;
 import fan.utils.DictMapStruct;
+import fancy.toolkit.net.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

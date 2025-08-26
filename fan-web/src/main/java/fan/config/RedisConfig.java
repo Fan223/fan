@@ -1,6 +1,6 @@
 package fan.config;
 
-import grey.fable.base.text.StringUtils;
+import fancy.toolkit.text.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.config.Config;
 import org.redisson.api.RedissonClient;

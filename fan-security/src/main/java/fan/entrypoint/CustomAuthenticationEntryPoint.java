@@ -1,7 +1,7 @@
 package fan.entrypoint;
 
 import cn.hutool.json.JSONUtil;
-import grey.fable.base.net.Response;
+import fancy.toolkit.net.Response;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

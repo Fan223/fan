@@ -2,6 +2,7 @@ package fan.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import fan.pojo.dto.ArticleDTO;
+import fan.pojo.dto.CategoryDTO;
 import fan.pojo.entity.ArticleDO;
 import fan.pojo.entity.CategoryDO;
 import fan.pojo.vo.ArticleVO;
@@ -83,4 +84,6 @@ public interface BlogMapStruct {
      * @since 2024/2/23 4:22
      */
     List<CategoryVO> transCategories(List<CategoryDO> categoryDos);
+
+    CategoryDO transCategories(CategoryDTO categoryDTO);
 }

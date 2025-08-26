@@ -1,9 +1,6 @@
 package fan.controller;
 
 import cn.hutool.core.collection.ListUtil;
-import grey.fable.base.net.Response;
-import grey.fable.base.collection.CollectionUtils;
-import grey.fable.base.collection.ListUtils;
 import fan.pojo.dto.MenuDTO;
 import fan.pojo.entity.MenuDO;
 import fan.pojo.query.MenuQuery;
@@ -11,6 +8,9 @@ import fan.pojo.vo.MenuVO;
 import fan.service.MenuService;
 import fan.utils.AdminMapStruct;
 import fan.utils.AdminUtil;
+import fancy.toolkit.collection.CollectionUtils;
+import fancy.toolkit.collection.ListUtils;
+import fancy.toolkit.net.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,10 +2,10 @@ package fan.filter;
 
 import cn.hutool.jwt.JWT;
 import fan.consts.AuthConst;
-import grey.fable.base.text.StringUtils;
 import fan.pojo.entity.MenuDO;
 import fan.service.MenuService;
 import fan.utils.JwtUtil;
+import fancy.toolkit.text.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;

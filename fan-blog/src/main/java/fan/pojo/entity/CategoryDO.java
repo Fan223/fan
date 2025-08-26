@@ -19,6 +19,8 @@ public class CategoryDO {
     @TableId
     private String id;
 
+    private String parentId;
+
     private String name;
 
     private Integer orderNum;

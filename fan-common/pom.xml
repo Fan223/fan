@@ -14,9 +14,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>grey.fable</groupId>
-            <artifactId>grey-fable-base</artifactId>
-            <version>2.0.0</version>
+            <groupId>fan</groupId>
+            <artifactId>fancy-toolkit</artifactId>
+            <version>2.1.1</version>
         </dependency>
 
         <!-- Web -->
@@ -41,6 +41,11 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
         </dependency>
 
         <!-- Lombok -->

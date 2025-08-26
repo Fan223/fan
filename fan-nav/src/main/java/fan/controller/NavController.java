@@ -1,13 +1,13 @@
 package fan.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import grey.fable.base.net.Response;
 import fan.pojo.dto.NavDTO;
 import fan.pojo.entity.NavDO;
 import fan.pojo.query.NavQuery;
 import fan.pojo.vo.NavVO;
 import fan.service.NavService;
 import fan.utils.NavMapStruct;
+import fancy.toolkit.net.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

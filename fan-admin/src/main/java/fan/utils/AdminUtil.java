@@ -1,8 +1,7 @@
 package fan.utils;
 
-import grey.fable.base.collection.CollectionUtils;
-import grey.fable.base.collection.ListUtils;
 import fan.pojo.vo.MenuVO;
+import fancy.toolkit.collection.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;

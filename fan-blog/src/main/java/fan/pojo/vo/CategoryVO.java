@@ -2,6 +2,9 @@ package fan.pojo.vo;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Category value object
  *
@@ -12,6 +15,8 @@ import lombok.Data;
 public class CategoryVO {
 
     private String id;
+
+    private String parentId;
 
     private String name;
 
@@ -24,4 +29,13 @@ public class CategoryVO {
     private String updateTime;
 
     private String count;
+
+    private List<CategoryVO> children;
+
+    public List<CategoryVO> getChildren() {
+        if (null == children) {
+            children = new ArrayList<>();
+        }
+        return children;
+    }
 }

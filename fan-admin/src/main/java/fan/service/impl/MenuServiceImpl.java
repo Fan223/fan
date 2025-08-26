@@ -1,15 +1,15 @@
 package fan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import grey.fable.base.collection.CollectionUtils;
-import grey.fable.base.text.StringUtils;
-import grey.fable.base.util.IdUtils;
 import fan.dao.MenuDAO;
 import fan.pojo.entity.MenuDO;
 import fan.pojo.query.MenuQuery;
 import fan.service.MenuService;
 import fan.service.RoleMenuService;
 import fan.service.UserRoleService;
+import fancy.toolkit.collection.CollectionUtils;
+import fancy.toolkit.id.IdUtils;
+import fancy.toolkit.text.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

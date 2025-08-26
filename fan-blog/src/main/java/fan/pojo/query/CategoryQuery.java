@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class CategoryQuery {
 
+    private String parentId;
+
     private String name;
 
     private String flag;
